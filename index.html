@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Useless Skills</title>
+<style>
+:root{font-family:Inter,ui-sans-serif,system-ui;--bg:#111;--text:#d4d4d4;--text-dim:#888;--text-muted:#555;--card-bg:#1a1a1a;--card-border:#2a2a2a;--card-b:#eee;--card-span:#666;--toolbar-bg:#1a1a1a;--toolbar-border:#333;--btn-bg:#2a2a2a;--btn-hover:#333;--th-bg:#181818;--row-hover:#1a1a1a;--skill-name:#e0e0e0;--agent-bg:#252525;--agent-text:#999;--dot-bg:#1a1a1a;--dot-border:#222;--dot-text:#555;--dot-on:#8a8a8a;--helper-bg:#333;--helper-text:#888;--helper-hover-bg:#444;--helper-hover-text:#ccc;--sort-icon:#444;--zero-text:#333;--open-hover:#2a2a2a;--border:#222}
+@media(prefers-color-scheme:light){:root{--bg:#f5f5f5;--text:#222;--text-dim:#666;--text-muted:#999;--card-bg:#fff;--card-border:#e0e0e0;--card-b:#111;--card-span:#666;--toolbar-bg:#fff;--toolbar-border:#ddd;--btn-bg:#e8e8e8;--btn-hover:#ddd;--th-bg:#fafafa;--row-hover:#f0f0f0;--skill-name:#111;--agent-bg:#eee;--agent-text:#555;--dot-bg:#fff;--dot-border:#ddd;--dot-text:#888;--dot-on:#333;--helper-bg:#ddd;--helper-text:#666;--helper-hover-bg:#ccc;--helper-hover-text:#333;--sort-icon:#bbb;--zero-text:#bbb;--open-hover:#eee;--border:#e0e0e0}}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:var(--bg);color:var(--text)}
+main{max-width:1200px;margin:auto;padding:38px 22px 80px}
+h1{font-size:clamp(42px,8vw,92px);line-height:.9;margin:18px 0 10px;letter-spacing:-.07em;background:linear-gradient(90deg,#ff67d4,#ffcb57,#69f5c8,#78a8ff,#d57bff);background-size:220% auto;color:transparent;background-clip:text;-webkit-background-clip:text;animation:shine 7s linear infinite}
+@keyframes shine{to{background-position:220% center}}
+.tag{font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--text-dim);font-size:12px}
+.sub{color:var(--text-muted);max-width:650px;font-size:14px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:28px 0}
+.card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:18px}
+.card b{display:block;font-size:32px;color:var(--card-b)}
+.card span{color:var(--card-span);font-size:13px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;padding:14px;margin-bottom:0}
+.toolbar input,.toolbar select,.toolbar button{background:var(--toolbar-bg);color:var(--text);border:1px solid var(--toolbar-border);border-radius:8px;padding:10px 12px;font:inherit;font-size:13px}
+.toolbar input{flex:1;min-width:220px}
+.toolbar button{cursor:pointer;background:var(--btn-bg);font-weight:600}
+.toolbar button:hover{background:var(--btn-hover)}
+.result-count{padding:0 16px 10px;color:var(--text-muted);font-size:12px;letter-spacing:.02em}
+.table-wrap{overflow:auto;border-radius:12px}
+table{width:100%;border-collapse:collapse;table-layout:fixed}
+col.c-skill{width:44%}
+col.c-agents{width:16%}
+col.c-uses{width:10%}
+col.c-sessions{width:10%}
+col.c-last{width:14%}
+col.c-open{width:6%}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--border)}
+th{position:sticky;top:0;background:var(--th-bg);cursor:pointer;color:var(--text-dim);user-select:none;font-size:12px;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+th:hover{color:var(--text)}
+th.sorted{color:var(--text)}
+tbody tr:hover{background:var(--row-hover)}
+.skill-cell{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.skill-name{font-weight:600;color:var(--skill-name);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.agent{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600;margin:1px 3px 1px 0;background:var(--agent-bg);color:var(--agent-text)}
+.installed{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 4px}
+.dot{font-size:11px;padding:3px 8px;border-radius:6px;background:var(--dot-bg);color:var(--dot-text);border:1px solid var(--dot-border)}
+.dot.on{color:var(--dot-on);border-color:var(--text-dim)}
+.helper{font-size:10px;background:var(--helper-bg);color:var(--helper-text);border-radius:50%;width:15px;height:15px;display:inline-flex;align-items:center;justify-content:center;cursor:help;margin-left:4px;font-weight:700}
+.helper:hover{background:var(--helper-hover-bg);color:var(--helper-hover-text)}
+.sort-icon{font-size:10px;margin-left:3px;color:var(--sort-icon)}
+th.sorted .sort-icon{color:var(--text-dim)}
+.zero td{color:var(--zero-text)}
+.open-btn{background:none;border:none;cursor:pointer;font-size:16px;padding:2px 6px;border-radius:6px;opacity:.5;transition:opacity .15s}
+.open-btn:hover{opacity:1;background:var(--open-hover)}
+th.no-sort{cursor:default}
+th.no-sort:hover{color:var(--text-dim)}
+.topbar{display:flex;justify-content:flex-end;margin-bottom:48px}
+.topbar-nav{display:flex;align-items:center;gap:6px}
+.topbar-nav span{color:var(--text-muted);font-size:.82rem}
+.topbar-nav a{color:var(--text);font-size:.82rem;font-weight:600;text-decoration:underline;text-underline-offset:2px}
+.topbar-nav a:hover{color:var(--text-muted)}
+.avatar{width:22px;height:22px;border-radius:999px;vertical-align:middle;margin-right:3px}
+@media(max-width:800px){.cards{grid-template-columns:repeat(2,1fr)}table{table-layout:auto}col.c-skill,col.c-agents,col.c-uses,col.c-sessions,col.c-last,col.c-open{width:auto}}
+</style>
+</head>
+<body><main>
+<header class="topbar" aria-label="Application header"><nav class="topbar-nav" aria-label="Product status"><span>Made with ♥ by <a href="https://arthak.fr"><img class="avatar" src="https://arthak.fr/assets/img/me-arthak.webp" alt="arthak"> arthak</a></span></nav></header>
+<div class="tag">local agent analytics</div><h1>Useless Skills</h1><p class="sub">Your skills might not be useless. Now you have the numbers to be disappointed with precision.</p>
+<div id="installed" class="installed"></div>
+<section id="cards" class="cards"></section>
+<section class="panel"><div class="toolbar"><input id="q" placeholder="Search a skill…"><select id="agent"><option value="">All agents</option></select><button id="refresh">Refresh</button></div><div id="result-count" class="result-count"></div><div class="table-wrap"><table><colgroup><col class="c-skill"><col class="c-agents"><col class="c-uses"><col class="c-sessions"><col class="c-last"><col class="c-open"></colgroup><thead><tr><th data-key="skill">Skill<span class="sort-icon">▲</span></th><th data-key="agents">Agents<span class="sort-icon">▲</span></th><th data-key="uses">Usages<span class="helper" data-tip="Total times the skill was invoked across all agents">?</span><span class="sort-icon">▲</span></th><th data-key="sessions">Sessions<span class="helper" data-tip="Distinct sessions where the skill was used (one session can invoke a skill many times)">?</span><span class="sort-icon">▲</span></th><th data-key="last_used">Last used<span class="sort-icon">▲</span></th><th class="no-sort">Open</th></tr></thead><tbody id="rows"></tbody></table></div></section>
+</main><script>
+let data,sortKey='uses',sortDir=-1;
+const fmt=n=>new Intl.NumberFormat('en-US').format(n||0);
+const escapeHtml=v=>String(v).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
+function groupBySkill(rows,agentFilter,needle){
+  const map=new Map();
+  for(const r of rows){
+    if(agentFilter&&r.agent!==agentFilter)continue;
+    if(needle&&!r.skill.toLowerCase().includes(needle))continue;
+    const key=r.skill_id||r.skill;
+    if(!map.has(key)){map.set(key,{skill:r.skill,skill_id:key,agents:new Set(),uses:0,sessions:0,last_used:r.skill,agentSet:new Set(),_last:r.last_used,skill_path:r.skill_path||null})}
+    const g=map.get(key);
+    g.agents.add(r.agent);
+    g.uses+=r.uses;
+    g.sessions+=r.sessions;
+    g.agentSet.add(r.agent);
+    if(!g.skill_path&&r.skill_path)g.skill_path=r.skill_path;
+    if(r.last_used&&(!g._last||r.last_used>g._last))g._last=r.last_used;
+  }
+  return[...map.values()].map(g=>({...g,agents:[...g.agents],last_used:g._last||null}));
+}
+async function load(){data=await fetch('data.json?'+Date.now()).then(r=>r.json());renderMeta();render()}
+function renderMeta(){cards.innerHTML=[['Total usages',data.summary.uses],['Unique skills',data.summary.skills],['Active agents',data.summary.agents],['Hermes views',data.summary.views]].map(([a,b])=>`<div class="card"><b>${fmt(b)}</b><span>${a}</span></div>`).join('');agent.innerHTML='<option value="">All agents</option>'+data.agents.map(a=>`<option>${escapeHtml(a)}</option>`).join('');installed.innerHTML=Object.entries(data.installed).map(([a,on])=>`<span class="dot ${on?'on':''}">${a}</span>`).join('')}
+function render(){const needle=q.value.toLowerCase(),selected=agent.value;let rows=groupBySkill(data.rows,selected,needle);rows.sort((a,b)=>{let x=a[sortKey],y=b[sortKey];if(sortKey==='agents'){x=a.agents.length;y=b.agents.length}if(sortKey==='last_used'){x=a.last_used||'';y=b.last_used||''}return(typeof x==='number'?x-y:String(x??'').localeCompare(String(y??'')))*sortDir});const total=data.rows.length,visible=rows.length;document.querySelector('#result-count').textContent=`${visible.toLocaleString('en-US')} skill${visible!==1?'s':''} shown \u00b7 ${total.toLocaleString('en-US')} total entries`;document.querySelectorAll('th').forEach(th=>{th.classList.toggle('sorted',th.dataset.key===sortKey);const icon=th.querySelector('.sort-icon');if(icon)icon.textContent=th.dataset.key===sortKey?(sortDir===1?'\u25b2':'\u25bc'):'\u25b2'});document.querySelector('#rows').innerHTML=rows.map(r=>`<tr class="${r.uses?'':'zero'}"><td class="skill-cell"><div class="skill-name" title="${escapeHtml(r.skill)}">${escapeHtml(r.skill)}</div></td><td>${r.agents.map(a=>`<span class="agent">${escapeHtml(a)}</span>`).join('')}</td><td>${fmt(r.uses)}</td><td>${fmt(r.sessions)}</td><td>${r.last_used?new Date(r.last_used).toLocaleString('en-US',{dateStyle:'medium',timeStyle:'short'}):'\u2013'}</td><td>${r.skill_path?`<button class="open-btn" onclick="openFolder('${escapeHtml(r.skill_path)}')" title="Open folder">\u{1F4C2}</button>`:''}</td></tr>`).join('')}
+async function openFolder(path){await fetch('/open-folder?path='+encodeURIComponent(path))}
+q.oninput=render;agent.onchange=render;document.querySelectorAll('th').forEach(th=>th.onclick=()=>{const k=th.dataset.key;sortDir=sortKey===k?-sortDir:(['uses','sessions','last_used'].includes(k)?-1:1);sortKey=k;render()});refresh.onclick=async()=>{refresh.textContent='Scanning…';await fetch('/refresh');await load();refresh.textContent='Refresh'};load();
+</script></body></html>
