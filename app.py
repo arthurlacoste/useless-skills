@@ -25,6 +25,39 @@ IS_WINDOWS = sys.platform == "win32"
 IS_MACOS = sys.platform == "darwin"
 IS_LINUX = not IS_WINDOWS and not IS_MACOS
 
+
+def _read_key(prompt: str) -> str:
+    if IS_WINDOWS:
+        import msvcrt
+        sys.stdout.write(prompt)
+        sys.stdout.flush()
+        while True:
+            if msvcrt.kbhit():
+                ch = msvcrt.getwch()
+                if ch == "\x03":
+                    raise KeyboardInterrupt
+                if ch in ("\r", "\n"):
+                    return ""
+                if ch == "\x08":
+                    return ch
+                sys.stdout.write(ch)
+                sys.stdout.flush()
+                return ch
+    else:
+        import tty
+        fd = sys.stdin.fileno()
+        old = tty.tcgetattr(fd)
+        try:
+            tty.setcbreak(fd)
+            sys.stdout.write(prompt)
+            sys.stdout.flush()
+            ch = sys.stdin.read(1)
+            if ch == "\x03":
+                raise KeyboardInterrupt
+            return ch
+        finally:
+            tty.tcsetattr(fd, tty.TCSAFLUSH, old)
+
 APPDATA = Path(os.environ.get("APPDATA", HOME / "AppData/Roaming"))
 LOCALAPPDATA = Path(os.environ.get("LOCALAPPDATA", HOME / "AppData/Local"))
 XDG_CONFIG_HOME = Path(os.environ.get("XDG_CONFIG_HOME", HOME / ".config"))
@@ -342,6 +375,310 @@ def build_payload() -> dict:
     }
 
 
+def _truncate(text: str, length: int) -> str:
+    return text if len(text) <= length else text[: length - 1] + "…"
+
+
+def _format_last_used(value: str | None) -> str:
+    if not value:
+        return ""
+    try:
+        return value.split("T")[0]
+    except Exception:
+        return value or ""
+
+
+def _apply_query(rows, query):
+    if not query:
+        return rows
+    query = query.strip()
+    if query.startswith("agent="):
+        agent = query[6:].strip()
+        return [r for r in rows if r.get("agent") == agent]
+    if query.startswith("skill="):
+        term = query[6:].strip().lower()
+        return [r for r in rows if term in r.get("skill", "").lower()]
+    term = query.lower()
+    return [r for r in rows if term in r.get("skill", "").lower() or term in r.get("agent", "").lower()]
+
+
+_SORT_DEFAULTS = {
+    "uses": True,
+    "sessions": True,
+    "skill": False,
+    "agent": False,
+    "last_used": True,
+}
+
+
+def _sort_rows(rows, sort, reverse=None):
+    if reverse is None:
+        reverse = _SORT_DEFAULTS.get(sort, True)
+    if sort == "sessions":
+        return sorted(rows, key=lambda r: (r.get("sessions", 0), r.get("skill", "").lower()), reverse=reverse)
+    if sort == "skill":
+        return sorted(rows, key=lambda r: r.get("skill", "").lower(), reverse=reverse)
+    if sort == "agent":
+        return sorted(rows, key=lambda r: (r.get("agent", ""), r.get("skill", "").lower()), reverse=reverse)
+    if sort == "last_used":
+        return sorted(rows, key=lambda r: (r.get("last_used") or "", r.get("skill", "").lower()), reverse=reverse)
+    return sorted(rows, key=lambda r: (r.get("uses", 0), r.get("skill", "").lower()), reverse=reverse)
+
+
+def _render_page(rows, start, end, total, query, sort, actual_limit, interactive=False):
+    page = rows[start:end]
+    if not page:
+        print("No data")
+        return None
+    headers = ("Skill", "Agent", "Uses", "Sessions", "Last Used")
+    widths = [len(h) for h in headers]
+    display = []
+    for r in page:
+        cells = (
+            _truncate(r.get("skill", ""), 40),
+            _truncate(r.get("agent", ""), 14),
+            str(r.get("uses", 0)),
+            str(r.get("sessions", 0)),
+            _format_last_used(r.get("last_used")),
+        )
+        widths = [max(w, len(c)) for w, c in zip(widths, cells)]
+        display.append(cells)
+    fmt = "  ".join(f"{{:<{w}}}" for w in widths)
+    sep = "  ".join("-" * w for w in widths)
+    print(fmt.format(*headers))
+    print(sep)
+    for cells in display:
+        print(fmt.format(*cells))
+    shown_start = start + 1
+    shown_end = start + len(page)
+    print()
+    filter_str = query if query else "no filter"
+    print(f"Showing {shown_start}-{shown_end} of {total} ({filter_str})")
+    hints = []
+    if interactive:
+        if end < total:
+            hints.append(f"n=next")
+        if start > 0:
+            hints.append(f"p=prev")
+        hints.append(f"f=filter 1=uses 2=sessions 3=skill 4=agent 5=last_used c=clear o=web q=quit")
+    else:
+        if end < total:
+            hints.append(f"--offset {end} --limit {actual_limit} for next")
+        if start > 0:
+            hints.append(f"--offset {max(0, start - actual_limit)} for prev")
+        if not query:
+            hints.append("--search text or agent=Name to filter")
+        hints.append("--open for dashboard")
+    print(" | ".join(hints))
+    return page
+
+
+def render_table(payload: dict, limit: int | None = None, offset: int = 0, query: str | None = None, sort: str = "uses", reverse: bool | None = None, interactive: bool = False) -> None:
+    rows = payload.get("rows", [])
+    if not interactive:
+        rows = _apply_query(rows, query)
+        rows = _sort_rows(rows, sort, reverse)
+        total = len(rows)
+        start = max(0, offset)
+        actual_limit = limit
+        if actual_limit is None:
+            try:
+                term_lines = os.get_terminal_size().lines
+                actual_limit = max(1, term_lines - 7)
+            except OSError:
+                actual_limit = total
+        if actual_limit <= 0:
+            end = total
+        else:
+            end = min(start + actual_limit, total)
+        _render_page(rows, start, end, total, query, sort, actual_limit, interactive=False)
+        s = payload.get("summary", {})
+        print(f"Total: {s.get('uses', 0)} uses, {s.get('views', 0)} views, {s.get('skills', 0)} skills, {s.get('agents', 0)} agents")
+        return
+    cur_query = query
+    cur_sort = sort
+    cur_reverse = _SORT_DEFAULTS.get(sort, True)
+    actual_limit = limit
+    if actual_limit is None:
+        try:
+            term_lines = os.get_terminal_size().lines
+            actual_limit = max(1, term_lines - 7)
+        except OSError:
+            actual_limit = len(rows)
+    cur_start = max(0, offset)
+    cur_end = min(cur_start + actual_limit, len(rows)) if actual_limit > 0 else len(rows)
+    while True:
+        filtered = _apply_query(rows, cur_query)
+        sorted_rows = _sort_rows(filtered, cur_sort, cur_reverse)
+        total = len(sorted_rows)
+        cur_start = min(cur_start, total)
+        cur_end = min(cur_end, total)
+        print("\033[H\033[J", end="")
+        page = _render_page(sorted_rows, cur_start, cur_end, total, cur_query, cur_sort, actual_limit, interactive=True)
+        if page is None:
+            break
+        s = payload.get("summary", {})
+        direction = "DESC" if cur_reverse else "ASC"
+        print(f"Total: {s.get('uses', 0)} uses, {s.get('views', 0)} views, {s.get('skills', 0)} skills, {s.get('agents', 0)} agents | sort={cur_sort} {direction}")
+        try:
+            cmd = _read_key("n/p/f/1/2/3/4/5/c/o/q> ").strip().lower()
+        except (EOFError, KeyboardInterrupt):
+            break
+        if cmd == "q":
+            break
+        if cmd == "n":
+            if cur_end < total:
+                cur_start = cur_end
+                cur_end = min(cur_start + actual_limit, total)
+        elif cmd == "p":
+            if cur_start > 0:
+                cur_end = cur_start
+                cur_start = max(0, cur_end - actual_limit)
+        elif cmd == "f":
+            try:
+                val = input("Filter (agent=X, skill=Y, or text): ").strip()
+            except (EOFError, KeyboardInterrupt):
+                val = ""
+            if val:
+                cur_query = val
+            else:
+                cur_query = None
+            cur_start = 0
+            cur_end = min(actual_limit, total) if actual_limit > 0 else total
+        elif cmd == "1":
+            if cur_sort == "uses":
+                cur_reverse = not cur_reverse
+            else:
+                cur_sort = "uses"
+                cur_reverse = _SORT_DEFAULTS["uses"]
+            cur_start = 0
+            cur_end = min(actual_limit, total) if actual_limit > 0 else total
+        elif cmd == "2":
+            if cur_sort == "sessions":
+                cur_reverse = not cur_reverse
+            else:
+                cur_sort = "sessions"
+                cur_reverse = _SORT_DEFAULTS["sessions"]
+            cur_start = 0
+            cur_end = min(actual_limit, total) if actual_limit > 0 else total
+        elif cmd == "3":
+            if cur_sort == "skill":
+                cur_reverse = not cur_reverse
+            else:
+                cur_sort = "skill"
+                cur_reverse = _SORT_DEFAULTS["skill"]
+            cur_start = 0
+            cur_end = min(actual_limit, total) if actual_limit > 0 else total
+        elif cmd == "4":
+            if cur_sort == "agent":
+                cur_reverse = not cur_reverse
+            else:
+                cur_sort = "agent"
+                cur_reverse = _SORT_DEFAULTS["agent"]
+            cur_start = 0
+            cur_end = min(actual_limit, total) if actual_limit > 0 else total
+        elif cmd == "5":
+            if cur_sort == "last_used":
+                cur_reverse = not cur_reverse
+            else:
+                cur_sort = "last_used"
+                cur_reverse = _SORT_DEFAULTS["last_used"]
+            cur_start = 0
+            cur_end = min(actual_limit, total) if actual_limit > 0 else total
+        elif cmd == "c":
+            cur_query = None
+            cur_sort = "uses"
+            cur_reverse = _SORT_DEFAULTS["uses"]
+            cur_start = 0
+            cur_end = min(actual_limit, total) if actual_limit > 0 else total
+        elif cmd == "o":
+            _open_dashboard_bg(payload)
+        else:
+            pass
+
+
+def _open_dashboard_bg(payload: dict) -> None:
+    path = ROOT / "data.json"
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2))
+    port = 8765
+    while True:
+        try:
+            server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
+            server.allow_reuse_address = True
+            break
+        except OSError:
+            port += 1
+    url = f"http://127.0.0.1:{port}"
+    print(f"\nOpening dashboard: {url}")
+    if not sys.stdout.isatty() or not sys.stdin.isatty():
+        print("Press Enter to return...")
+        try:
+            input()
+        except (EOFError, KeyboardInterrupt):
+            pass
+        return
+    try:
+        webbrowser.open(url)
+    except Exception:
+        pass
+    t = threading.Thread(target=server.serve_forever, daemon=True)
+    t.start()
+    print("Dashboard running in background. Return to table? (y/n): ", end="")
+    sys.stdout.flush()
+    try:
+        ans = _read_key("").strip().lower()
+    except (EOFError, KeyboardInterrupt):
+        ans = "y"
+    print()
+    if ans == "n":
+        raise SystemExit
+
+
+def _toon_value(value) -> str:
+    if isinstance(value, str):
+        return value
+    if isinstance(value, int):
+        return str(value)
+    if isinstance(value, float):
+        return str(value)
+    if value is None:
+        return ""
+    return str(value)
+
+
+def render_toon(payload: dict, limit: int = 100, offset: int = 0, agent: str | None = None, search: str | None = None) -> None:
+    rows = payload.get("rows", [])
+    if agent:
+        rows = [r for r in rows if r.get("agent") == agent]
+    if search:
+        term = search.lower()
+        rows = [r for r in rows if term in r.get("skill", "").lower()]
+    total = len(rows)
+    start = max(0, offset)
+    end = min(start + limit, total) if limit > 0 else total
+    page = rows[start:end]
+    lines = []
+    s = payload.get("summary", {})
+    keys = ["uses", "views", "skills", "agents"]
+    lines.append(f"summary{{{','.join(keys)}}}: {','.join(_toon_value(s.get(k, 0)) for k in keys)}")
+    lines.append("")
+    if not page:
+        lines.append("skills{0}:")
+        print("\n".join(lines))
+        return
+    row_keys = ["agent", "skill", "uses", "sessions", "views", "patches", "last_used", "confidence"]
+    lines.append(f"skills{{{len(page)}}}:")
+    for k in row_keys:
+        vals = [_toon_value(r.get(k)) for r in page]
+        lines.append(f"  {k}[{len(vals)}]: {','.join(vals)}")
+    if total > len(page):
+        lines.append("")
+        shown_start = start + 1
+        shown_end = start + len(page)
+        lines.append(f"# showing {shown_start}-{shown_end} of {total} | --offset {end} --limit {limit} for next")
+    print("\n".join(lines))
+
+
 def write_data() -> Path:
     path = ROOT / "data.json"
     path.write_text(json.dumps(build_payload(), ensure_ascii=False, indent=2))
@@ -379,11 +716,39 @@ def main() -> None:
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument("--no-open", action="store_true")
     parser.add_argument("--json", action="store_true")
+    parser.add_argument("--table", action="store_true", help="Render data as a terminal table")
+    parser.add_argument("--toon", action="store_true", help="Render data in TOON format for agents")
+    parser.add_argument("--limit", type=int, default=None, help="Max rows to show (default: auto for table, 100 for toon)")
+    parser.add_argument("--offset", type=int, default=0, help="Rows to skip")
+    parser.add_argument("--agent", type=str, default=None, help="Filter by agent name")
+    parser.add_argument("--search", type=str, default=None, help="Filter by skill name substring")
+    parser.add_argument("--query", type=str, default=None, help="Global filter (agent=X, skill=Y, or text)")
+    parser.add_argument("--sort", type=str, default="uses", choices=["uses", "sessions", "skill", "agent", "last_used"], help="Sort column")
+    parser.add_argument("--reverse", action="store_true", default=None, help="Reverse sort order")
+    parser.add_argument("--open", action="store_true", help="Also open the web dashboard")
     args = parser.parse_args()
     path = write_data()
     if args.json:
         print(path.read_text())
         return
+    payload = json.loads(path.read_text())
+    if args.table:
+        interactive = args.table and sys.stdout.isatty() and sys.stdin.isatty()
+        cli_reverse = None if args.reverse is None else not _SORT_DEFAULTS.get(args.sort, True)
+        render_table(payload, limit=args.limit, offset=args.offset, query=args.query or args.agent or args.search, sort=args.sort, reverse=cli_reverse, interactive=interactive)
+        if args.open and not interactive:
+            _serve(payload, args)
+        return
+    if args.toon:
+        toon_limit = args.limit if args.limit is not None else 100
+        render_toon(payload, limit=toon_limit, offset=args.offset, agent=args.agent, search=args.search)
+        if args.open:
+            _serve(payload, args)
+        return
+    _serve(payload, args)
+
+
+def _serve(payload: dict, args: argparse.Namespace) -> None:
     os.chdir(ROOT)
     port = args.port
     while True:
