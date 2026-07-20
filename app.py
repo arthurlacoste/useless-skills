@@ -19,7 +19,15 @@ from typing import Iterable
 
 HOME = Path.home()
 ROOT = Path(__file__).resolve().parent
+VERSION_FILE = ROOT / "VERSION"
 SKILL_PATH_RE = re.compile(r"(?:^|[/\\])skills[/\\](.+?)[/\\]SKILL\.md", re.I)
+
+
+def read_version() -> str:
+    try:
+        return VERSION_FILE.read_text(encoding="utf-8").strip()
+    except OSError:
+        return "0.0.0"
 
 IS_WINDOWS = sys.platform == "win32"
 IS_MACOS = sys.platform == "darwin"
@@ -790,7 +798,11 @@ def main() -> None:
     parser.add_argument("--reverse", action="store_true", default=None, help="Reverse sort order")
     parser.add_argument("--open", action="store_true", help="Also open the web dashboard")
     parser.add_argument("--no-cache", action="store_true", help="Skip the on-disk build cache and rescan all sources")
+    parser.add_argument("--version", action="store_true", help="Show the Useless Skills version and exit")
     args = parser.parse_args()
+    if args.version:
+        print(f"Useless Skills {read_version()}")
+        return
     path = write_data(use_cache=not args.no_cache)
     if args.json:
         print(path.read_text())

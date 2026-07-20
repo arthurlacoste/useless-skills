@@ -1,0 +1,77 @@
+name: Release Useless Skills
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    name: Python tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Run tests
+        run: python -m pytest -q
+
+      - name: Check whitespace errors
+        run: git diff --check
+
+  release:
+    name: Create GitHub Release
+    needs:
+      - test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Verify version matches tag
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "v$(tr -d '\n' < VERSION)" = "${GITHUB_REF_NAME}"
+
+      - name: Build release archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive="useless-skills-${GITHUB_REF_NAME}.tar.gz"
+          git archive --format=tar.gz --prefix="useless-skills-${GITHUB_REF_NAME}/" -o "$archive" "$GITHUB_REF_NAME"
+          sha256sum "$archive" > SHA256SUMS
+
+      - name: Extract release notes from changelog
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="${GITHUB_REF_NAME#v}"
+          awk -v version="$version" '
+            $0 == "## " version { found=1 }
+            found && $0 ~ /^## / && $0 != "## " version { exit }
+            found { print }
+          ' CHANGELOG.md > release-notes.md
+          test -s release-notes.md
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            "useless-skills-${GITHUB_REF_NAME}.tar.gz" \
+            SHA256SUMS \
+            --verify-tag \
+            --notes-file release-notes.md \
+            --title "Useless Skills $GITHUB_REF_NAME"

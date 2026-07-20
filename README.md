@@ -18,6 +18,7 @@ Options:
 ./useless-skills --no-open
 ./useless-skills --json
 ./useless-skills --no-cache   # force a full rescan, skip the build cache
+./useless-skills --version    # print the version and exit
 ```
 
 The first run scans every agent's session logs (Codex logs alone can be
@@ -78,3 +79,19 @@ Compact columnar format for agents. Defaults to 100 rows.
 ```
 
 Hermes and OpenCode provide structured counters. Other agents are measured by explicit `SKILL.md` file reads, so their numbers are minimums.
+
+## Releases
+
+Versioning follows SemVer, tracked in `VERSION` with human-readable notes in
+`CHANGELOG.md` (one `## X.Y.Z` section per release). The version is shown by
+`./useless-skills --version`.
+
+To cut a release:
+
+1. Add a `## X.Y.Z` entry at the top of `CHANGELOG.md`.
+2. Update `VERSION` to `X.Y.Z`.
+3. Commit and tag it: `git tag vX.Y.Z && git push origin vX.Y.Z`.
+
+Pushing a `vX.Y.Z` tag triggers `.github/workflows/release.yml`, which verifies
+the tag matches `VERSION`, builds a tarball plus `SHA256SUMS`, and creates a
+GitHub release using the matching changelog section as notes.
