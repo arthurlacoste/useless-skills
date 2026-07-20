@@ -1,7 +1,5 @@
 # Useless Skills
 
-![Useless Skills Dashboard](assets/useless-skills-screenshot.webp)
-
 Local dashboard that aggregates skill usage from Hermes, OpenCode, Codex, Claude Code, Pi, Continue, Cline, Cursor, Roo Code, and Windsurf when their data is available.
 
 ## Launch
