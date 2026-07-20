@@ -17,7 +17,14 @@ Options:
 ./useless-skills --port 9000
 ./useless-skills --no-open
 ./useless-skills --json
+./useless-skills --no-cache   # force a full rescan, skip the build cache
 ```
+
+The first run scans every agent's session logs (Codex logs alone can be
+hundreds of MB, so it may take a few seconds). Results are cached on disk
+under `.cache/` keyed on the modification times of all input sources, so
+repeat runs (`--table`, `--toon`, `--json`) are instant until a source
+changes. JSONL scanning also skips any file that does not mention `SKILL.md`.
 
 ## CLI table
 

@@ -233,6 +233,67 @@ def merge(stats: Iterable[Stat]) -> list[dict]:
     return [asdict(v) for v in merged.values()]
 
 
+CACHE_DIR = ROOT / ".cache"
+PAYLOAD_CACHE = CACHE_DIR / "payload_cache.json"
+
+
+def _source_fingerprint() -> dict:
+    """A cheap signature of the external inputs so we can skip re-scanning
+    when nothing changed. Only the session/data sources are fingerprinted
+    (skill roots are huge trees and rarely change, so they are excluded to
+    keep validation fast)."""
+    sources: list[Path] = []
+    for roots in AGENT_DATA_ROOTS.values():
+        sources.extend(roots)
+    sources.append(HOME / ".hermes" / "skills" / ".usage.json")
+    for db in [
+        XDG_DATA_HOME / "opencode" / "opencode.db",
+        LOCALAPPDATA / "opencode" / "opencode.db",
+        APPDATA / "opencode" / "opencode.db",
+    ]:
+        sources.append(db)
+    sig = {}
+    for path in sources:
+        try:
+            st = path.stat()
+            sig[str(path)] = [st.st_mtime_ns, st.st_size]
+        except OSError:
+            sig[str(path)] = None
+    return sig
+
+
+def _load_cached_payload() -> dict | None:
+    try:
+        data = json.loads(PAYLOAD_CACHE.read_text())
+    except Exception:
+        return None
+    if data.get("_fingerprint") != _source_fingerprint():
+        return None
+    data.pop("_fingerprint", None)
+    return data
+
+
+def _save_cached_payload(payload: dict) -> None:
+    try:
+        CACHE_DIR.mkdir(parents=True, exist_ok=True)
+        cached = dict(payload)
+        cached["_fingerprint"] = _source_fingerprint()
+        PAYLOAD_CACHE.write_text(json.dumps(cached, ensure_ascii=False))
+    except Exception:
+        pass
+
+
+def build_payload(use_cache: bool = True) -> dict:
+    if use_cache:
+        cached = _load_cached_payload()
+        if cached is not None:
+            return cached
+    payload = _build_payload_fresh()
+    if use_cache:
+        _save_cached_payload(payload)
+    return payload
+
+
 def collect_hermes() -> list[Stat]:
     path = HOME / ".hermes/skills/.usage.json"
     if not path.exists():
@@ -291,19 +352,21 @@ def scan_jsonl_paths(agent: str, files: Iterable[Path], valid_roots: list[Path] 
     for file in files:
         sid = file.stem
         try:
-            with file.open(errors="ignore") as handle:
-                for line in handle:
-                    if "SKILL.md" not in line or "skills" not in line.lower():
-                        continue
-                    for name in set(SKILL_PATH_RE.findall(line)):
-                        name = name.replace("\\", "/")
-                        if valid and name not in valid and not any(name.endswith("/" + v) for v in valid):
-                            continue
-                        counts[name] += 1
-                        sessions[name].add(sid)
-                        last[name] = max(last.get(name, 0), file.stat().st_mtime)
+            text = file.read_text(errors="ignore")
         except OSError:
             continue
+        if "SKILL.md" not in text or "skills" not in text.lower():
+            continue
+        for line in text.splitlines():
+            if "SKILL.md" not in line or "skills" not in line.lower():
+                continue
+            for name in set(SKILL_PATH_RE.findall(line)):
+                name = name.replace("\\", "/")
+                if valid and name not in valid and not any(name.endswith("/" + v) for v in valid):
+                    continue
+                counts[name] += 1
+                sessions[name].add(sid)
+                last[name] = max(last.get(name, 0), file.stat().st_mtime)
     return [Stat(agent, name, count, len(sessions[name]), last_used=iso_from_timestamp(last[name]),
                  confidence="explicit read", skill_path=resolve_skill_path(agent, name))
             for name, count in counts.items()]
@@ -340,7 +403,7 @@ def collect_generic() -> list[Stat]:
     return out
 
 
-def build_payload() -> dict:
+def _build_payload_fresh() -> dict:
     collectors = [collect_hermes, collect_opencode, collect_codex, collect_claude, collect_pi, collect_generic]
     stats: list[Stat] = []
     for collector in collectors:
@@ -679,9 +742,9 @@ def render_toon(payload: dict, limit: int = 100, offset: int = 0, agent: str | N
     print("\n".join(lines))
 
 
-def write_data() -> Path:
+def write_data(use_cache: bool = True) -> Path:
     path = ROOT / "data.json"
-    path.write_text(json.dumps(build_payload(), ensure_ascii=False, indent=2))
+    path.write_text(json.dumps(build_payload(use_cache=use_cache), ensure_ascii=False, indent=2))
     return path
 
 
@@ -726,8 +789,9 @@ def main() -> None:
     parser.add_argument("--sort", type=str, default="uses", choices=["uses", "sessions", "skill", "agent", "last_used"], help="Sort column")
     parser.add_argument("--reverse", action="store_true", default=None, help="Reverse sort order")
     parser.add_argument("--open", action="store_true", help="Also open the web dashboard")
+    parser.add_argument("--no-cache", action="store_true", help="Skip the on-disk build cache and rescan all sources")
     args = parser.parse_args()
-    path = write_data()
+    path = write_data(use_cache=not args.no_cache)
     if args.json:
         print(path.read_text())
         return

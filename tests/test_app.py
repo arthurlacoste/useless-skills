@@ -272,6 +272,39 @@ def test_render_table_limit_offset(capsys):
     assert "Showing 2-3 of 3" in out
 
 
+def test_render_table_ten_times_average_time_before_first_display(capsys):
+    """Render the table 10 times and assert the average time before the first
+    row is displayed (temps avant affichage) stays under a reasonable threshold."""
+    import io
+    import time
+    import app
+    from contextlib import redirect_stdout
+
+    payload = {
+        "rows": [
+            {"agent": "Codex", "skill": "seo", "uses": 1, "sessions": 1, "views": 0, "patches": 0, "last_used": None, "confidence": "exact", "skill_path": None, "skill_id": None},
+            {"agent": "OpenCode", "skill": "testing", "uses": 2, "sessions": 2, "views": 0, "patches": 0, "last_used": None, "confidence": "exact", "skill_path": None, "skill_id": None},
+            {"agent": "Claude Code", "skill": "review", "uses": 3, "sessions": 1, "views": 0, "patches": 0, "last_used": None, "confidence": "exact", "skill_path": None, "skill_id": None},
+        ],
+        "summary": {"uses": 6, "views": 0, "skills": 3, "agents": 3},
+    }
+
+    timings = []
+    N = 10
+    for _ in range(N):
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            start = time.perf_counter()
+            render_table(payload, limit=10)
+            elapsed = time.perf_counter() - start
+        assert buf.getvalue().strip()
+        timings.append(elapsed)
+
+    moyenne = sum(timings) / len(timings)
+    print(f"\nTemps avant affichage (moyenne sur {N}): {moyenne*1000:.3f} ms")
+    assert moyenne < 1.0
+
+
 def test_render_toon_default_limit_100(capsys):
     payload = {
         "rows": [{"agent": "A", "skill": f"s{i}", "uses": i, "sessions": i, "views": 0, "patches": 0, "last_used": None, "confidence": "exact", "skill_path": None, "skill_id": None} for i in range(150)],
