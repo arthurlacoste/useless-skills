@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-07-12T16:42:51.156391+00:00",
+  "generated_at": "2026-07-20T06:05:59.919605+00:00",
   "rows": [
     {
       "agent": "Codex",
       "skill": ".system/skill-creator",
-      "uses": 977,
-      "sessions": 245,
+      "uses": 987,
+      "sessions": 247,
       "views": 0,
       "patches": 0,
-      "last_used": "2026-07-11T15:34:29.427251+00:00",
+      "last_used": "2026-07-16T07:24:40.433796+00:00",
       "confidence": "explicit read",
       "skill_path": "/Users/art/.codex/skills/.system/skill-creator",
       "skill_id": "/Users/art/.codex/skills/.system/skill-creator"
@@ -52,23 +52,35 @@
     {
       "agent": "Codex",
       "skill": ".system/openai-docs",
-      "uses": 237,
-      "sessions": 211,
+      "uses": 239,
+      "sessions": 213,
       "views": 0,
       "patches": 0,
-      "last_used": "2026-06-15T06:53:07.371317+00:00",
+      "last_used": "2026-07-16T19:15:00.431661+00:00",
       "confidence": "explicit read",
       "skill_path": "/Users/art/.codex/skills/.system/openai-docs",
       "skill_id": "/Users/art/.codex/skills/.system/openai-docs"
     },
     {
       "agent": "Codex",
-      "skill": "mattpocock/productivity/caveman",
-      "uses": 141,
-      "sessions": 105,
+      "skill": "computer-use",
+      "uses": 173,
+      "sessions": 138,
       "views": 0,
       "patches": 0,
-      "last_used": "2026-07-12T06:48:18.024773+00:00",
+      "last_used": "2026-07-19T12:59:56.146397+00:00",
+      "confidence": "explicit read",
+      "skill_path": "/Users/art/.codex/skills/computer-use",
+      "skill_id": "/Users/art/.codex/skills/computer-use"
+    },
+    {
+      "agent": "Codex",
+      "skill": "mattpocock/productivity/caveman",
+      "uses": 164,
+      "sessions": 127,
+      "views": 0,
+      "patches": 0,
+      "last_used": "2026-07-19T12:59:56.146397+00:00",
       "confidence": "explicit read",
       "skill_path": "/Users/art/.codex/skills/mattpocock/productivity/caveman",
       "skill_id": "/Users/art/.codex/skills/mattpocock/productivity/caveman"
@@ -76,26 +88,26 @@
     {
       "agent": "Codex",
       "skill": "mattpocock/engineering/diagnose",
-      "uses": 81,
-      "sessions": 56,
+      "uses": 93,
+      "sessions": 64,
       "views": 0,
       "patches": 0,
-      "last_used": "2026-06-18T06:09:12.619579+00:00",
+      "last_used": "2026-07-17T08:21:51.706738+00:00",
       "confidence": "explicit read",
       "skill_path": "/Users/art/.codex/skills/mattpocock/engineering/diagnose",
       "skill_id": "/Users/art/.codex/skills/mattpocock/engineering/diagnose"
     },
     {
       "agent": "Codex",
-      "skill": "computer-use",
-      "uses": 69,
-      "sessions": 59,
+      "skill": "mattpocock/productivity/grill-me",
+      "uses": 73,
+      "sessions": 61,
       "views": 0,
       "patches": 0,
-      "last_used": "2026-07-12T06:57:59.925110+00:00",
+      "last_used": "2026-07-16T23:36:24.798348+00:00",
       "confidence": "explicit read",
-      "skill_path": "/Users/art/.codex/skills/computer-use",
-      "skill_id": "/Users/art/.codex/skills/computer-use"
+      "skill_path": "/Users/art/.codex/skills/mattpocock/productivity/grill-me",
+      "skill_id": "/Users/art/.codex/skills/mattpocock/productivity/grill-me"
     },
     {
       "agent": "Codex",
@@ -124,14 +136,26 @@
     {
       "agent": "Codex",
       "skill": "mattpocock/engineering/tdd",
+      "uses": 65,
+      "sessions": 57,
+      "views": 0,
+      "patches": 0,
+      "last_used": "2026-07-16T23:36:24.798348+00:00",
+      "confidence": "explicit read",
+      "skill_path": "/Users/art/.codex/skills/mattpocock/engineering/tdd",
+      "skill_id": "/Users/art/.codex/skills/mattpocock/engineering/tdd"
+    },
+    {
+      "agent": "Codex",
+      "skill": "mattpocock/productivity/handoff",
       "uses": 64,
       "sessions": 56,
       "views": 0,
       "patches": 0,
-      "last_used": "2026-07-04T14:03:27.793974+00:00",
+      "last_used": "2026-07-15T13:10:33.120525+00:00",
       "confidence": "explicit read",
-      "skill_path": "/Users/art/.codex/skills/mattpocock/engineering/tdd",
-      "skill_id": "/Users/art/.codex/skills/mattpocock/engineering/tdd"
+      "skill_path": "/Users/art/.codex/skills/mattpocock/productivity/handoff",
+      "skill_id": "/Users/art/.codex/skills/mattpocock/productivity/handoff"
     },
     {
       "agent": "Codex",
@@ -243,30 +267,6 @@
     },
     {
       "agent": "Codex",
-      "skill": "mattpocock/productivity/grill-me",
-      "uses": 63,
-      "sessions": 55,
-      "views": 0,
-      "patches": 0,
-      "last_used": "2026-06-18T06:09:12.619579+00:00",
-      "confidence": "explicit read",
-      "skill_path": "/Users/art/.codex/skills/mattpocock/productivity/grill-me",
-      "skill_id": "/Users/art/.codex/skills/mattpocock/productivity/grill-me"
-    },
-    {
-      "agent": "Codex",
-      "skill": "mattpocock/productivity/handoff",
-      "uses": 63,
-      "sessions": 55,
-      "views": 0,
-      "patches": 0,
-      "last_used": "2026-06-18T06:09:12.619579+00:00",
-      "confidence": "explicit read",
-      "skill_path": "/Users/art/.codex/skills/mattpocock/productivity/handoff",
-      "skill_id": "/Users/art/.codex/skills/mattpocock/productivity/handoff"
-    },
-    {
-      "agent": "Codex",
       "skill": "mattpocock/productivity/write-a-skill",
       "uses": 63,
       "sessions": 55,
@@ -276,6 +276,30 @@
       "confidence": "explicit read",
       "skill_path": "/Users/art/.codex/skills/mattpocock/productivity/write-a-skill",
       "skill_id": "/Users/art/.codex/skills/mattpocock/productivity/write-a-skill"
+    },
+    {
+      "agent": "Codex",
+      "skill": "github/github-pr-workflow",
+      "uses": 60,
+      "sessions": 47,
+      "views": 0,
+      "patches": 0,
+      "last_used": "2026-07-16T23:36:24.798348+00:00",
+      "confidence": "explicit read",
+      "skill_path": "/Users/art/.codex/skills/github/github-pr-workflow",
+      "skill_id": "/Users/art/.codex/skills/github/github-pr-workflow"
+    },
+    {
+      "agent": "Codex",
+      "skill": "github/github-issues",
+      "uses": 58,
+      "sessions": 46,
+      "views": 0,
+      "patches": 0,
+      "last_used": "2026-07-15T00:48:49.647618+00:00",
+      "confidence": "explicit read",
+      "skill_path": "/Users/art/.codex/skills/github/github-issues",
+      "skill_id": "/Users/art/.codex/skills/github/github-issues"
     },
     {
       "agent": "OpenCode",
@@ -291,15 +315,27 @@
     },
     {
       "agent": "Codex",
-      "skill": "github/github-issues",
-      "uses": 49,
-      "sessions": 42,
+      "skill": "github/codebase-inspection",
+      "uses": 51,
+      "sessions": 44,
       "views": 0,
       "patches": 0,
-      "last_used": "2026-07-06T07:46:57.535050+00:00",
+      "last_used": "2026-07-16T16:46:40.749726+00:00",
       "confidence": "explicit read",
-      "skill_path": "/Users/art/.codex/skills/github/github-issues",
-      "skill_id": "/Users/art/.codex/skills/github/github-issues"
+      "skill_path": "/Users/art/.codex/skills/github/codebase-inspection",
+      "skill_id": "/Users/art/.codex/skills/github/codebase-inspection"
+    },
+    {
+      "agent": "Codex",
+      "skill": "github/github-repo-management",
+      "uses": 50,
+      "sessions": 41,
+      "views": 0,
+      "patches": 0,
+      "last_used": "2026-07-17T08:21:51.706738+00:00",
+      "confidence": "explicit read",
+      "skill_path": "/Users/art/.codex/skills/github/github-repo-management",
+      "skill_id": "/Users/art/.codex/skills/github/github-repo-management"
     },
     {
       "agent": "OpenCode",
@@ -310,53 +346,17 @@
       "patches": 0,
       "last_used": "2026-07-12T13:42:00.606000+00:00",
       "confidence": "exact",
-      "skill_path": "/Users/art/.config/opencode/skills/arthak-writing-style",
-      "skill_id": "/Users/art/.config/opencode/skills/arthak-writing-style"
-    },
-    {
-      "agent": "Codex",
-      "skill": "github/github-pr-workflow",
-      "uses": 47,
-      "sessions": 40,
-      "views": 0,
-      "patches": 0,
-      "last_used": "2026-07-05T16:41:10.124534+00:00",
-      "confidence": "explicit read",
-      "skill_path": "/Users/art/.codex/skills/github/github-pr-workflow",
-      "skill_id": "/Users/art/.codex/skills/github/github-pr-workflow"
-    },
-    {
-      "agent": "Codex",
-      "skill": "github/github-repo-management",
-      "uses": 47,
-      "sessions": 39,
-      "views": 0,
-      "patches": 0,
-      "last_used": "2026-07-05T17:08:32.890258+00:00",
-      "confidence": "explicit read",
-      "skill_path": "/Users/art/.codex/skills/github/github-repo-management",
-      "skill_id": "/Users/art/.codex/skills/github/github-repo-management"
-    },
-    {
-      "agent": "Codex",
-      "skill": "github/codebase-inspection",
-      "uses": 46,
-      "sessions": 39,
-      "views": 0,
-      "patches": 0,
-      "last_used": "2026-07-05T12:13:39.981206+00:00",
-      "confidence": "explicit read",
-      "skill_path": "/Users/art/.codex/skills/github/codebase-inspection",
-      "skill_id": "/Users/art/.codex/skills/github/codebase-inspection"
+      "skill_path": null,
+      "skill_id": "arthak-writing-style"
     },
     {
       "agent": "Codex",
       "skill": "github/github-auth",
-      "uses": 45,
-      "sessions": 38,
+      "uses": 46,
+      "sessions": 39,
       "views": 0,
       "patches": 0,
-      "last_used": "2026-06-26T17:45:33.592323+00:00",
+      "last_used": "2026-07-17T08:21:51.706738+00:00",
       "confidence": "explicit read",
       "skill_path": "/Users/art/.codex/skills/github/github-auth",
       "skill_id": "/Users/art/.codex/skills/github/github-auth"
@@ -364,11 +364,11 @@
     {
       "agent": "Codex",
       "skill": "github/github-code-review",
-      "uses": 45,
-      "sessions": 38,
+      "uses": 46,
+      "sessions": 39,
       "views": 0,
       "patches": 0,
-      "last_used": "2026-06-26T17:45:33.592323+00:00",
+      "last_used": "2026-07-13T08:39:22.773570+00:00",
       "confidence": "explicit read",
       "skill_path": "/Users/art/.codex/skills/github/github-code-review",
       "skill_id": "/Users/art/.codex/skills/github/github-code-review"
@@ -384,6 +384,18 @@
       "confidence": "explicit read",
       "skill_path": "/Users/art/.codex/skills/llm-council",
       "skill_id": "/Users/art/.codex/skills/llm-council"
+    },
+    {
+      "agent": "Codex",
+      "skill": "software-development/test-driven-development",
+      "uses": 25,
+      "sessions": 12,
+      "views": 0,
+      "patches": 0,
+      "last_used": "2026-07-15T23:52:36.952979+00:00",
+      "confidence": "explicit read",
+      "skill_path": "/Users/art/.codex/skills/software-development/test-driven-development",
+      "skill_id": "/Users/art/.codex/skills/software-development/test-driven-development"
     },
     {
       "agent": "Codex",
@@ -410,6 +422,18 @@
       "skill_id": "lestudiopixel-blog-translation"
     },
     {
+      "agent": "Hermes",
+      "skill": "lestudiopixel-mail-projet-tattoo",
+      "uses": 19,
+      "sessions": 0,
+      "views": 13,
+      "patches": 2,
+      "last_used": "2026-07-18T17:00:23.360404+00:00",
+      "confidence": "exact",
+      "skill_path": "/Users/art/.hermes/skills/lestudiopixel-mail-projet-tattoo",
+      "skill_id": "/Users/art/.hermes/skills/lestudiopixel-mail-projet-tattoo"
+    },
+    {
       "agent": "OpenCode",
       "skill": "lestudiopixel-publish-article",
       "uses": 19,
@@ -424,14 +448,26 @@
     {
       "agent": "OpenCode",
       "skill": "lightpanda-browser",
-      "uses": 17,
-      "sessions": 16,
+      "uses": 18,
+      "sessions": 17,
       "views": 0,
       "patches": 0,
-      "last_used": "2026-07-07T14:52:17.053000+00:00",
+      "last_used": "2026-07-12T21:16:23.025000+00:00",
       "confidence": "exact",
-      "skill_path": "/Users/art/.config/opencode/skills/lightpanda-browser",
-      "skill_id": "/Users/art/.config/opencode/skills/lightpanda-browser"
+      "skill_path": null,
+      "skill_id": "lightpanda-browser"
+    },
+    {
+      "agent": "Codex",
+      "skill": "software-development/systematic-debugging",
+      "uses": 18,
+      "sessions": 10,
+      "views": 0,
+      "patches": 0,
+      "last_used": "2026-07-15T00:48:49.647618+00:00",
+      "confidence": "explicit read",
+      "skill_path": "/Users/art/.codex/skills/software-development/systematic-debugging",
+      "skill_id": "/Users/art/.codex/skills/software-development/systematic-debugging"
     },
     {
       "agent": "Codex",
@@ -446,18 +482,6 @@
       "skill_id": "/Users/art/.codex/skills/lestudiopixel-blog-article"
     },
     {
-      "agent": "Hermes",
-      "skill": "lestudiopixel-mail-projet-tattoo",
-      "uses": 16,
-      "sessions": 0,
-      "views": 12,
-      "patches": 2,
-      "last_used": "2026-07-12T11:01:46.689671+00:00",
-      "confidence": "exact",
-      "skill_path": "/Users/art/.hermes/skills/lestudiopixel-mail-projet-tattoo",
-      "skill_id": "/Users/art/.hermes/skills/lestudiopixel-mail-projet-tattoo"
-    },
-    {
       "agent": "OpenCode",
       "skill": "graphify",
       "uses": 15,
@@ -466,8 +490,8 @@
       "patches": 0,
       "last_used": "2026-07-02T18:24:42.160000+00:00",
       "confidence": "exact",
-      "skill_path": "/Users/art/.config/opencode/skills/graphify",
-      "skill_id": "/Users/art/.config/opencode/skills/graphify"
+      "skill_path": null,
+      "skill_id": "graphify"
     },
     {
       "agent": "OpenCode",
@@ -494,16 +518,16 @@
       "skill_id": "/Users/art/.codex/skills/lightpanda-browser"
     },
     {
-      "agent": "Codex",
-      "skill": "software-development/systematic-debugging",
+      "agent": "Hermes",
+      "skill": "google-workspace",
       "uses": 11,
-      "sessions": 8,
-      "views": 0,
+      "sessions": 0,
+      "views": 4,
       "patches": 0,
-      "last_used": "2026-07-11T15:34:29.427251+00:00",
-      "confidence": "explicit read",
-      "skill_path": "/Users/art/.codex/skills/software-development/systematic-debugging",
-      "skill_id": "/Users/art/.codex/skills/software-development/systematic-debugging"
+      "last_used": "2026-07-18T17:00:23.395799+00:00",
+      "confidence": "exact",
+      "skill_path": "/Users/art/.hermes/skills/google-workspace",
+      "skill_id": "/Users/art/.hermes/skills/google-workspace"
     },
     {
       "agent": "Cline",
@@ -516,6 +540,18 @@
       "confidence": "explicit read",
       "skill_path": null,
       "skill_id": "integration-javascript_node"
+    },
+    {
+      "agent": "Codex",
+      "skill": "translate-with-ollama",
+      "uses": 10,
+      "sessions": 4,
+      "views": 0,
+      "patches": 0,
+      "last_used": "2026-07-13T11:16:58.817788+00:00",
+      "confidence": "explicit read",
+      "skill_path": "/Users/art/.codex/skills/translate-with-ollama",
+      "skill_id": "/Users/art/.codex/skills/translate-with-ollama"
     },
     {
       "agent": "Hermes",
@@ -566,6 +602,18 @@
       "skill_id": "/Users/art/.codex/skills/lestudiopixel/lestudiopixel-frontend-maintenance"
     },
     {
+      "agent": "Codex",
+      "skill": "note-taking/obsidian",
+      "uses": 8,
+      "sessions": 6,
+      "views": 0,
+      "patches": 0,
+      "last_used": "2026-07-16T16:51:04.330898+00:00",
+      "confidence": "explicit read",
+      "skill_path": "/Users/art/.codex/skills/note-taking/obsidian",
+      "skill_id": "/Users/art/.codex/skills/note-taking/obsidian"
+    },
+    {
       "agent": "OpenCode",
       "skill": "playwright-cli",
       "uses": 8,
@@ -600,18 +648,6 @@
       "confidence": "exact",
       "skill_path": null,
       "skill_id": "council-advisors"
-    },
-    {
-      "agent": "Hermes",
-      "skill": "google-workspace",
-      "uses": 7,
-      "sessions": 0,
-      "views": 3,
-      "patches": 0,
-      "last_used": "2026-07-12T11:02:17.780016+00:00",
-      "confidence": "exact",
-      "skill_path": "/Users/art/.hermes/skills/google-workspace",
-      "skill_id": "/Users/art/.hermes/skills/google-workspace"
     },
     {
       "agent": "Codex",
@@ -742,8 +778,8 @@
       "patches": 0,
       "last_used": "2026-07-03T04:51:01.771000+00:00",
       "confidence": "exact",
-      "skill_path": "/Users/art/.config/opencode/skills/github-issues",
-      "skill_id": "/Users/art/.config/opencode/skills/github-issues"
+      "skill_path": null,
+      "skill_id": "github-issues"
     },
     {
       "agent": "Codex",
@@ -843,18 +879,6 @@
     },
     {
       "agent": "Codex",
-      "skill": "translate-with-ollama",
-      "uses": 6,
-      "sessions": 1,
-      "views": 0,
-      "patches": 0,
-      "last_used": "2026-07-03T06:35:10.495693+00:00",
-      "confidence": "explicit read",
-      "skill_path": "/Users/art/.codex/skills/translate-with-ollama",
-      "skill_id": "/Users/art/.codex/skills/translate-with-ollama"
-    },
-    {
-      "agent": "Codex",
       "skill": "usability-test-plan",
       "uses": 6,
       "sessions": 4,
@@ -922,8 +946,8 @@
       "patches": 0,
       "last_used": "2026-06-16T15:21:49.235000+00:00",
       "confidence": "exact",
-      "skill_path": "/Users/art/.config/opencode/skills/arthak-email-style",
-      "skill_id": "/Users/art/.config/opencode/skills/arthak-email-style"
+      "skill_path": null,
+      "skill_id": "arthak-email-style"
     },
     {
       "agent": "Codex",
@@ -946,8 +970,8 @@
       "patches": 0,
       "last_used": "2026-06-29T08:07:17.906000+00:00",
       "confidence": "exact",
-      "skill_path": "/Users/art/.config/opencode/skills/caveman",
-      "skill_id": "/Users/art/.config/opencode/skills/caveman"
+      "skill_path": null,
+      "skill_id": "caveman"
     },
     {
       "agent": "Codex",
@@ -1226,6 +1250,18 @@
       "skill_id": "/Users/art/.codex/skills/handoff-spec"
     },
     {
+      "agent": "Hermes",
+      "skill": "hermes-agent",
+      "uses": 5,
+      "sessions": 0,
+      "views": 5,
+      "patches": 0,
+      "last_used": "2026-07-16T12:20:13.986932+00:00",
+      "confidence": "exact",
+      "skill_path": "/Users/art/.hermes/skills/hermes-agent",
+      "skill_id": "/Users/art/.hermes/skills/hermes-agent"
+    },
+    {
       "agent": "Codex",
       "skill": "heuristic-evaluation",
       "uses": 5,
@@ -1320,6 +1356,18 @@
       "confidence": "exact",
       "skill_path": "/Users/art/.hermes/skills/lestudiopixel-blog-article",
       "skill_id": "/Users/art/.hermes/skills/lestudiopixel-blog-article"
+    },
+    {
+      "agent": "Codex",
+      "skill": "lestudiopixel-blog-translation",
+      "uses": 5,
+      "sessions": 2,
+      "views": 0,
+      "patches": 0,
+      "last_used": "2026-07-15T13:35:15.870445+00:00",
+      "confidence": "explicit read",
+      "skill_path": "/Users/art/.codex/skills/lestudiopixel-blog-translation",
+      "skill_id": "/Users/art/.codex/skills/lestudiopixel-blog-translation"
     },
     {
       "agent": "Hermes",
@@ -1802,18 +1850,6 @@
       "skill_id": "/Users/art/.hermes/skills/github-pr-workflow"
     },
     {
-      "agent": "Hermes",
-      "skill": "hermes-agent",
-      "uses": 4,
-      "sessions": 0,
-      "views": 4,
-      "patches": 0,
-      "last_used": "2026-07-12T11:05:24.648608+00:00",
-      "confidence": "exact",
-      "skill_path": "/Users/art/.hermes/skills/hermes-agent",
-      "skill_id": "/Users/art/.hermes/skills/hermes-agent"
-    },
-    {
       "agent": "Codex",
       "skill": "information-architecture",
       "uses": 4,
@@ -1887,6 +1923,30 @@
     },
     {
       "agent": "Codex",
+      "skill": "software-development/plan",
+      "uses": 4,
+      "sessions": 3,
+      "views": 0,
+      "patches": 0,
+      "last_used": "2026-07-16T15:16:15.065895+00:00",
+      "confidence": "explicit read",
+      "skill_path": "/Users/art/.codex/skills/software-development/plan",
+      "skill_id": "/Users/art/.codex/skills/software-development/plan"
+    },
+    {
+      "agent": "Codex",
+      "skill": "apple/macos-computer-use",
+      "uses": 3,
+      "sessions": 3,
+      "views": 0,
+      "patches": 0,
+      "last_used": "2026-07-19T12:59:56.146397+00:00",
+      "confidence": "explicit read",
+      "skill_path": "/Users/art/.codex/skills/apple/macos-computer-use",
+      "skill_id": "/Users/art/.codex/skills/apple/macos-computer-use"
+    },
+    {
+      "agent": "Codex",
       "skill": "direct-production-sql",
       "uses": 3,
       "sessions": 3,
@@ -1918,8 +1978,8 @@
       "patches": 0,
       "last_used": "2026-06-29T14:34:28.746000+00:00",
       "confidence": "exact",
-      "skill_path": "/Users/art/.config/opencode/skills/github-pr-workflow",
-      "skill_id": "/Users/art/.config/opencode/skills/github-pr-workflow"
+      "skill_path": null,
+      "skill_id": "github-pr-workflow"
     },
     {
       "agent": "Cline",
@@ -1978,8 +2038,8 @@
       "patches": 0,
       "last_used": "2026-07-02T07:08:36.509000+00:00",
       "confidence": "exact",
-      "skill_path": "/Users/art/.config/opencode/skills/lestudiopixel-local-admin",
-      "skill_id": "/Users/art/.config/opencode/skills/lestudiopixel-local-admin"
+      "skill_path": null,
+      "skill_id": "lestudiopixel-local-admin"
     },
     {
       "agent": "Codex",
@@ -1992,6 +2052,30 @@
       "confidence": "explicit read",
       "skill_path": "/Users/art/.codex/skills/lestudiopixel-publish-article",
       "skill_id": "/Users/art/.codex/skills/lestudiopixel-publish-article"
+    },
+    {
+      "agent": "Codex",
+      "skill": "meshy-download",
+      "uses": 3,
+      "sessions": 2,
+      "views": 0,
+      "patches": 0,
+      "last_used": "2026-07-15T21:46:45.141825+00:00",
+      "confidence": "explicit read",
+      "skill_path": "/Users/art/.codex/skills/meshy-download",
+      "skill_id": "/Users/art/.codex/skills/meshy-download"
+    },
+    {
+      "agent": "Codex",
+      "skill": "research/llm-wiki",
+      "uses": 3,
+      "sessions": 1,
+      "views": 0,
+      "patches": 0,
+      "last_used": "2026-07-15T13:35:15.870445+00:00",
+      "confidence": "explicit read",
+      "skill_path": "/Users/art/.codex/skills/research/llm-wiki",
+      "skill_id": "/Users/art/.codex/skills/research/llm-wiki"
     },
     {
       "agent": "OpenCode",
@@ -2043,18 +2127,6 @@
     },
     {
       "agent": "Codex",
-      "skill": "software-development/test-driven-development",
-      "uses": 3,
-      "sessions": 2,
-      "views": 0,
-      "patches": 0,
-      "last_used": "2026-07-04T21:11:44.938303+00:00",
-      "confidence": "explicit read",
-      "skill_path": "/Users/art/.codex/skills/software-development/test-driven-development",
-      "skill_id": "/Users/art/.codex/skills/software-development/test-driven-development"
-    },
-    {
-      "agent": "Codex",
       "skill": ".system/skill-creator/scripts/quick_validate.py /Users/art/.codex/skills/lightpanda-browser</code>.</li>/n    <li>Résultat : <code>Skill is valid!</code>.</li>/n    <li>Capture visuelle : non applicable. Skill texte, pas UI projet.</li>/n    <li>Note environnement : <code>lightpanda</code> non détecté globalement au moment du test. Package npm <code>@lightpanda/browser</code> vu en version <code>1.3.1</code>.</li>/n  </ul>/n/n  <h2>Fichiers concernés</h2>/n  <ul>/n    <li><code>/Users/art/.codex/skills/lightpanda-browser",
       "uses": 2,
       "sessions": 1,
@@ -2064,6 +2136,30 @@
       "confidence": "explicit read",
       "skill_path": null,
       "skill_id": ".system/skill-creator/scripts/quick_validate.py /Users/art/.codex/skills/lightpanda-browser</code>.</li>/n    <li>Résultat : <code>Skill is valid!</code>.</li>/n    <li>Capture visuelle : non applicable. Skill texte, pas UI projet.</li>/n    <li>Note environnement : <code>lightpanda</code> non détecté globalement au moment du test. Package npm <code>@lightpanda/browser</code> vu en version <code>1.3.1</code>.</li>/n  </ul>/n/n  <h2>Fichiers concernés</h2>/n  <ul>/n    <li><code>/Users/art/.codex/skills/lightpanda-browser"
+    },
+    {
+      "agent": "Codex",
+      "skill": "autonomous-ai-agents/opencode",
+      "uses": 2,
+      "sessions": 2,
+      "views": 0,
+      "patches": 0,
+      "last_used": "2026-07-15T10:35:30.554692+00:00",
+      "confidence": "explicit read",
+      "skill_path": "/Users/art/.codex/skills/autonomous-ai-agents/opencode",
+      "skill_id": "/Users/art/.codex/skills/autonomous-ai-agents/opencode"
+    },
+    {
+      "agent": "OpenCode",
+      "skill": "codebase-memory",
+      "uses": 2,
+      "sessions": 2,
+      "views": 0,
+      "patches": 0,
+      "last_used": "2026-07-19T18:57:38.081000+00:00",
+      "confidence": "exact",
+      "skill_path": "/Users/art/.claude/skills/codebase-memory",
+      "skill_id": "/Users/art/.claude/skills/codebase-memory"
     },
     {
       "agent": "OpenCode",
@@ -2124,18 +2220,6 @@
       "confidence": "exact",
       "skill_path": "/Users/art/.hermes/skills/lestudiopixel-blog-seo-snapshot",
       "skill_id": "/Users/art/.hermes/skills/lestudiopixel-blog-seo-snapshot"
-    },
-    {
-      "agent": "Codex",
-      "skill": "lestudiopixel-blog-translation",
-      "uses": 2,
-      "sessions": 1,
-      "views": 0,
-      "patches": 0,
-      "last_used": "2026-07-02T10:36:23.129997+00:00",
-      "confidence": "explicit read",
-      "skill_path": "/Users/art/.codex/skills/lestudiopixel-blog-translation",
-      "skill_id": "/Users/art/.codex/skills/lestudiopixel-blog-translation"
     },
     {
       "agent": "Cline",
@@ -2379,18 +2463,6 @@
     },
     {
       "agent": "Codex",
-      "skill": "note-taking/obsidian",
-      "uses": 2,
-      "sessions": 1,
-      "views": 0,
-      "patches": 0,
-      "last_used": "2026-07-10T19:28:59.486149+00:00",
-      "confidence": "explicit read",
-      "skill_path": "/Users/art/.codex/skills/note-taking/obsidian",
-      "skill_id": "/Users/art/.codex/skills/note-taking/obsidian"
-    },
-    {
-      "agent": "Codex",
       "skill": "seo",
       "uses": 2,
       "sessions": 2,
@@ -2400,6 +2472,18 @@
       "confidence": "explicit read",
       "skill_path": "/Users/art/.codex/skills/seo",
       "skill_id": "/Users/art/.codex/skills/seo"
+    },
+    {
+      "agent": "Codex",
+      "skill": "seo-page",
+      "uses": 2,
+      "sessions": 2,
+      "views": 0,
+      "patches": 0,
+      "last_used": "2026-07-12T21:52:13.173520+00:00",
+      "confidence": "explicit read",
+      "skill_path": "/Users/art/.codex/skills/seo-page",
+      "skill_id": "/Users/art/.codex/skills/seo-page"
     },
     {
       "agent": "Hermes",
@@ -2439,6 +2523,18 @@
     },
     {
       "agent": "Codex",
+      "skill": ".system/skill-creator/references/openai_yaml.md/n/Users/art/.codex/skills/.system/skill-creator/agents/openai.yaml/n/Users/art/.codex/skills/.system/skill-creator/scripts/init_skill.py/n/Users/art/.codex/skills/.system/skill-creator/scripts/quick_validate.py/n/Users/art/.codex/skills/.system/skill-creator/scripts/__pycache__/generate_openai_yaml.cpython-314.pyc/n/Users/art/.codex/skills/.system/skill-creator/scripts/generate_openai_yaml.py/n/Users/art/.codex/skills/.system/skill-creator",
+      "uses": 1,
+      "sessions": 1,
+      "views": 0,
+      "patches": 0,
+      "last_used": "2026-07-15T10:48:29.116982+00:00",
+      "confidence": "explicit read",
+      "skill_path": null,
+      "skill_id": ".system/skill-creator/references/openai_yaml.md/n/Users/art/.codex/skills/.system/skill-creator/agents/openai.yaml/n/Users/art/.codex/skills/.system/skill-creator/scripts/init_skill.py/n/Users/art/.codex/skills/.system/skill-creator/scripts/quick_validate.py/n/Users/art/.codex/skills/.system/skill-creator/scripts/__pycache__/generate_openai_yaml.cpython-314.pyc/n/Users/art/.codex/skills/.system/skill-creator/scripts/generate_openai_yaml.py/n/Users/art/.codex/skills/.system/skill-creator"
+    },
+    {
+      "agent": "Codex",
       "skill": ".system/skill-creator/scripts/quick_validate.py /Users/art/.codex/skills/lightpanda-browser</code>.</li>/n+    <li>Résultat : <code>Skill is valid!</code>.</li>/n+    <li>Capture visuelle : non applicable. Skill texte, pas UI projet.</li>/n+    <li>Note environnement : <code>lightpanda</code> non détecté globalement au moment du test. Package npm <code>@lightpanda/browser</code> vu en version <code>1.3.1</code>.</li>/n+  </ul>/n+/n+  <h2>Fichiers concernés</h2>/n+  <ul>/n+    <li><code>/Users/art/.codex/skills/lightpanda-browser",
       "uses": 1,
       "sessions": 1,
@@ -2448,6 +2544,30 @@
       "confidence": "explicit read",
       "skill_path": null,
       "skill_id": ".system/skill-creator/scripts/quick_validate.py /Users/art/.codex/skills/lightpanda-browser</code>.</li>/n+    <li>Résultat : <code>Skill is valid!</code>.</li>/n+    <li>Capture visuelle : non applicable. Skill texte, pas UI projet.</li>/n+    <li>Note environnement : <code>lightpanda</code> non détecté globalement au moment du test. Package npm <code>@lightpanda/browser</code> vu en version <code>1.3.1</code>.</li>/n+  </ul>/n+/n+  <h2>Fichiers concernés</h2>/n+  <ul>/n+    <li><code>/Users/art/.codex/skills/lightpanda-browser"
+    },
+    {
+      "agent": "Codex",
+      "skill": "//\" -maxdepth 2 -mindepth 1 -print -exec ls -ld {} ////; 2>/dev/null | sed -n '1,160p' || true//nprintf '%s////n' '--- bundled skill tail ---'//nSKILL='/Users/art/.codex/plugins/cache/openai-bundled/computer-use/1.0.1000387/skills/computer-use",
+      "uses": 1,
+      "sessions": 1,
+      "views": 0,
+      "patches": 0,
+      "last_used": "2026-07-16T23:36:24.798348+00:00",
+      "confidence": "explicit read",
+      "skill_path": null,
+      "skill_id": "//\" -maxdepth 2 -mindepth 1 -print -exec ls -ld {} ////; 2>/dev/null | sed -n '1,160p' || true//nprintf '%s////n' '--- bundled skill tail ---'//nSKILL='/Users/art/.codex/plugins/cache/openai-bundled/computer-use/1.0.1000387/skills/computer-use"
+    },
+    {
+      "agent": "OpenCode",
+      "skill": "agents",
+      "uses": 1,
+      "sessions": 1,
+      "views": 0,
+      "patches": 0,
+      "last_used": "2026-07-15T12:14:16.428000+00:00",
+      "confidence": "exact",
+      "skill_path": null,
+      "skill_id": "agents"
     },
     {
       "agent": "Hermes",
@@ -2523,27 +2643,15 @@
     },
     {
       "agent": "Codex",
-      "skill": "apple/macos-computer-use",
+      "skill": "autonomous-ai-agents/codex",
       "uses": 1,
       "sessions": 1,
       "views": 0,
       "patches": 0,
-      "last_used": "2026-07-11T15:34:29.427251+00:00",
+      "last_used": "2026-07-15T10:35:30.554692+00:00",
       "confidence": "explicit read",
-      "skill_path": "/Users/art/.codex/skills/apple/macos-computer-use",
-      "skill_id": "/Users/art/.codex/skills/apple/macos-computer-use"
-    },
-    {
-      "agent": "Codex",
-      "skill": "autonomous-ai-agents/opencode",
-      "uses": 1,
-      "sessions": 1,
-      "views": 0,
-      "patches": 0,
-      "last_used": "2026-07-01T20:48:53.657794+00:00",
-      "confidence": "explicit read",
-      "skill_path": "/Users/art/.codex/skills/autonomous-ai-agents/opencode",
-      "skill_id": "/Users/art/.codex/skills/autonomous-ai-agents/opencode"
+      "skill_path": "/Users/art/.codex/skills/autonomous-ai-agents/codex",
+      "skill_id": "/Users/art/.codex/skills/autonomous-ai-agents/codex"
     },
     {
       "agent": "OpenCode",
@@ -2580,18 +2688,6 @@
       "confidence": "exact",
       "skill_path": null,
       "skill_id": "cloudflare-cache-management"
-    },
-    {
-      "agent": "OpenCode",
-      "skill": "codebase-memory",
-      "uses": 1,
-      "sessions": 1,
-      "views": 0,
-      "patches": 0,
-      "last_used": "2026-07-08T14:10:39.355000+00:00",
-      "confidence": "exact",
-      "skill_path": "/Users/art/.claude/skills/codebase-memory",
-      "skill_id": "/Users/art/.claude/skills/codebase-memory"
     },
     {
       "agent": "Hermes",
@@ -3182,6 +3278,30 @@
       "skill_id": "/Users/art/.hermes/skills/opencode"
     },
     {
+      "agent": "OpenCode",
+      "skill": "orca-cli",
+      "uses": 1,
+      "sessions": 1,
+      "views": 0,
+      "patches": 0,
+      "last_used": "2026-07-19T19:15:12.708000+00:00",
+      "confidence": "exact",
+      "skill_path": "/Users/art/.agents/skills/orca-cli",
+      "skill_id": "/Users/art/.agents/skills/orca-cli"
+    },
+    {
+      "agent": "OpenCode",
+      "skill": "orchestration",
+      "uses": 1,
+      "sessions": 1,
+      "views": 0,
+      "patches": 0,
+      "last_used": "2026-07-15T12:13:55.799000+00:00",
+      "confidence": "exact",
+      "skill_path": "/Users/art/.agents/skills/orchestration",
+      "skill_id": "/Users/art/.agents/skills/orchestration"
+    },
+    {
       "agent": "Hermes",
       "skill": "plan",
       "uses": 1,
@@ -3214,8 +3334,8 @@
       "patches": 0,
       "last_used": "2026-06-15T06:50:03.511000+00:00",
       "confidence": "exact",
-      "skill_path": "/Users/art/.config/opencode/skills/remotion-best-practices",
-      "skill_id": "/Users/art/.config/opencode/skills/remotion-best-practices"
+      "skill_path": "/Users/art/.agents/skills/remotion-best-practices",
+      "skill_id": "/Users/art/.agents/skills/remotion-best-practices"
     },
     {
       "agent": "Cline",
@@ -3554,18 +3674,6 @@
       "skill_id": "/Users/art/.codex/skills/seo-maps"
     },
     {
-      "agent": "Codex",
-      "skill": "seo-page",
-      "uses": 1,
-      "sessions": 1,
-      "views": 0,
-      "patches": 0,
-      "last_used": "2026-06-18T06:09:12.619579+00:00",
-      "confidence": "explicit read",
-      "skill_path": "/Users/art/.codex/skills/seo-page",
-      "skill_id": "/Users/art/.codex/skills/seo-page"
-    },
-    {
       "agent": "Cline",
       "skill": "seo-plan",
       "uses": 1,
@@ -3758,6 +3866,18 @@
       "skill_id": "software-development/requesting-code-review"
     },
     {
+      "agent": "Codex",
+      "skill": "software-development/requesting-code-review",
+      "uses": 1,
+      "sessions": 1,
+      "views": 0,
+      "patches": 0,
+      "last_used": "2026-07-13T08:39:22.773570+00:00",
+      "confidence": "explicit read",
+      "skill_path": "/Users/art/.codex/skills/software-development/requesting-code-review",
+      "skill_id": "/Users/art/.codex/skills/software-development/requesting-code-review"
+    },
+    {
       "agent": "Cline",
       "skill": "software-development/simplify-code",
       "uses": 1,
@@ -3768,6 +3888,18 @@
       "confidence": "explicit read",
       "skill_path": null,
       "skill_id": "software-development/simplify-code"
+    },
+    {
+      "agent": "Codex",
+      "skill": "software-development/simplify-code",
+      "uses": 1,
+      "sessions": 1,
+      "views": 0,
+      "patches": 0,
+      "last_used": "2026-07-15T16:34:54.328846+00:00",
+      "confidence": "explicit read",
+      "skill_path": "/Users/art/.codex/skills/software-development/simplify-code",
+      "skill_id": "/Users/art/.codex/skills/software-development/simplify-code"
     },
     {
       "agent": "Cline",
@@ -3878,6 +4010,18 @@
       "skill_id": "version-control-strategy"
     },
     {
+      "agent": "Cline",
+      "skill": "winegold-native-scripts",
+      "uses": 1,
+      "sessions": 1,
+      "views": 0,
+      "patches": 0,
+      "last_used": "2026-07-19T21:25:36.631492+00:00",
+      "confidence": "explicit read",
+      "skill_path": null,
+      "skill_id": "winegold-native-scripts"
+    },
+    {
       "agent": "Hermes",
       "skill": "ci-failure-debugging",
       "uses": 0,
@@ -3933,9 +4077,9 @@
     "Windsurf": true
   },
   "summary": {
-    "uses": 5338,
-    "views": 72,
-    "skills": 256,
+    "uses": 5608,
+    "views": 75,
+    "skills": 263,
     "agents": 4
   }
 }

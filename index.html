@@ -75,7 +75,7 @@ function groupBySkill(rows,agentFilter,needle){
     if(agentFilter&&r.agent!==agentFilter)continue;
     if(needle&&!r.skill.toLowerCase().includes(needle))continue;
     const key=r.skill_id||r.skill;
-    if(!map.has(key)){map.set(key,{skill:r.skill,skill_id:key,agents:new Set(),uses:0,sessions:0,last_used:r.skill,agentSet:new Set(),_last:r.last_used,skill_path:r.skill_path||null})}
+    if(!map.has(key)){map.set(key,{skill:r.skill,skill_id:key,agents:new Set(),uses:0,sessions:0,last_used:null,agentSet:new Set(),_last:r.last_used,skill_path:r.skill_path||null})}
     const g=map.get(key);
     g.agents.add(r.agent);
     g.uses+=r.uses;
@@ -86,9 +86,25 @@ function groupBySkill(rows,agentFilter,needle){
   }
   return[...map.values()].map(g=>({...g,agents:[...g.agents],last_used:g._last||null}));
 }
-async function load(){data=await fetch('data.json?'+Date.now()).then(r=>r.json());renderMeta();render()}
+async function load(){const response=await fetch('data.json?'+Date.now(),{cache:'no-store'});if(!response.ok)throw new Error(`Data fetch failed: ${response.status}`);data=await response.json();renderMeta();render()}
 function renderMeta(){cards.innerHTML=[['Total usages',data.summary.uses],['Unique skills',data.summary.skills],['Active agents',data.summary.agents],['Hermes views',data.summary.views]].map(([a,b])=>`<div class="card"><b>${fmt(b)}</b><span>${a}</span></div>`).join('');agent.innerHTML='<option value="">All agents</option>'+data.agents.map(a=>`<option>${escapeHtml(a)}</option>`).join('');installed.innerHTML=Object.entries(data.installed).map(([a,on])=>`<span class="dot ${on?'on':''}">${a}</span>`).join('')}
 function render(){const needle=q.value.toLowerCase(),selected=agent.value;let rows=groupBySkill(data.rows,selected,needle);rows.sort((a,b)=>{let x=a[sortKey],y=b[sortKey];if(sortKey==='agents'){x=a.agents.length;y=b.agents.length}if(sortKey==='last_used'){x=a.last_used||'';y=b.last_used||''}return(typeof x==='number'?x-y:String(x??'').localeCompare(String(y??'')))*sortDir});const total=data.rows.length,visible=rows.length;document.querySelector('#result-count').textContent=`${visible.toLocaleString('en-US')} skill${visible!==1?'s':''} shown \u00b7 ${total.toLocaleString('en-US')} total entries`;document.querySelectorAll('th').forEach(th=>{th.classList.toggle('sorted',th.dataset.key===sortKey);const icon=th.querySelector('.sort-icon');if(icon)icon.textContent=th.dataset.key===sortKey?(sortDir===1?'\u25b2':'\u25bc'):'\u25b2'});document.querySelector('#rows').innerHTML=rows.map(r=>`<tr class="${r.uses?'':'zero'}"><td class="skill-cell"><div class="skill-name" title="${escapeHtml(r.skill)}">${escapeHtml(r.skill)}</div></td><td>${r.agents.map(a=>`<span class="agent">${escapeHtml(a)}</span>`).join('')}</td><td>${fmt(r.uses)}</td><td>${fmt(r.sessions)}</td><td>${r.last_used?new Date(r.last_used).toLocaleString('en-US',{dateStyle:'medium',timeStyle:'short'}):'\u2013'}</td><td>${r.skill_path?`<button class="open-btn" onclick="openFolder('${escapeHtml(r.skill_path)}')" title="Open folder">\u{1F4C2}</button>`:''}</td></tr>`).join('')}
 async function openFolder(path){await fetch('/open-folder?path='+encodeURIComponent(path))}
-q.oninput=render;agent.onchange=render;document.querySelectorAll('th').forEach(th=>th.onclick=()=>{const k=th.dataset.key;sortDir=sortKey===k?-sortDir:(['uses','sessions','last_used'].includes(k)?-1:1);sortKey=k;render()});refresh.onclick=async()=>{refresh.textContent='Scanning…';await fetch('/refresh');await load();refresh.textContent='Refresh'};load();
+const REFRESH_INTERVAL_MS=30000;
+let refreshTimer=null;
+let refreshPromise=null;
+async function reloadData(){
+  if(refreshPromise)return refreshPromise;
+  refreshPromise=(async()=>{
+    const response=await fetch('/refresh',{cache:'no-store'});
+    if(!response.ok)throw new Error(`Refresh failed: ${response.status}`);
+    await load();
+  })().finally(()=>{refreshPromise=null});
+  return refreshPromise;
+}
+function stopAutoRefresh(){if(refreshTimer){clearInterval(refreshTimer);refreshTimer=null}}
+function startAutoRefresh(){stopAutoRefresh();if(document.visibilityState==='visible')refreshTimer=setInterval(reloadData,REFRESH_INTERVAL_MS)}
+async function refreshNow(){await reloadData();startAutoRefresh()}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')refreshNow();else stopAutoRefresh()});
+q.oninput=render;agent.onchange=render;document.querySelectorAll('th').forEach(th=>th.onclick=()=>{const k=th.dataset.key;sortDir=sortKey===k?-sortDir:(['uses','sessions','last_used'].includes(k)?-1:1);sortKey=k;render()});refresh.onclick=async()=>{refresh.disabled=true;refresh.textContent='Scanning…';try{await refreshNow()}finally{refresh.disabled=false;refresh.textContent='Refresh'}};refreshNow();
 </script></body></html>
