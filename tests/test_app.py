@@ -1,6 +1,6 @@
 import sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from app import Stat, merge, iso_from_timestamp, is_inside_allowed_root, open_folder, agent_is_installed, find_first_existing, AGENT_SKILL_ROOTS, render_table, render_toon, _apply_query, _sort_rows
 
 def test_merge_sums_same_agent_skill():
@@ -78,7 +78,7 @@ def test_agent_is_installedchecks_data_and_skills(tmp_path):
 
 
 def test_dashboard_refreshes_on_open_and_every_30_seconds():
-    html = (Path(__file__).resolve().parents[1] / "index.html").read_text()
+    html = (Path(__file__).resolve().parents[1] / "web" / "index.html").read_text()
     assert "const REFRESH_INTERVAL_MS=30000" in html
     assert "refreshNow();" in html
     assert "setInterval(reloadData,REFRESH_INTERVAL_MS)" in html
@@ -87,7 +87,7 @@ def test_dashboard_refreshes_on_open_and_every_30_seconds():
 
 
 def test_dashboard_refetches_without_http_cache_and_avoids_overlap():
-    html = (Path(__file__).resolve().parents[1] / "index.html").read_text()
+    html = (Path(__file__).resolve().parents[1] / "web" / "index.html").read_text()
     assert "fetch('/refresh',{cache:'no-store'})" in html
     assert "fetch('data.json?'+Date.now(),{cache:'no-store'})" in html
     assert "if(refreshPromise)return refreshPromise" in html

@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-VERSION_FILE = ROOT / "VERSION"
+VERSION_FILE = ROOT.parent / "docs" / "VERSION"
 
 _STABLE = re.compile(r"^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$")
 

@@ -18,8 +18,11 @@ from pathlib import Path
 from typing import Iterable
 
 HOME = Path.home()
-ROOT = Path(__file__).resolve().parent
-VERSION_FILE = ROOT / "VERSION"
+SRC_DIR = Path(__file__).resolve().parent
+ROOT = SRC_DIR.parent
+WEB_DIR = ROOT / "web"
+DOCS_DIR = ROOT / "docs"
+VERSION_FILE = DOCS_DIR / "VERSION"
 SKILL_PATH_RE = re.compile(r"(?:^|[/\\])skills[/\\](.+?)[/\\]SKILL\.md", re.I)
 
 
@@ -669,7 +672,7 @@ def render_table(payload: dict, limit: int | None = None, offset: int = 0, query
 
 
 def _open_dashboard_bg(payload: dict) -> None:
-    path = ROOT / "data.json"
+    path = WEB_DIR / "data.json"
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2))
     port = 8765
     while True:
@@ -751,7 +754,7 @@ def render_toon(payload: dict, limit: int = 100, offset: int = 0, agent: str | N
 
 
 def write_data(use_cache: bool = True) -> Path:
-    path = ROOT / "data.json"
+    path = WEB_DIR / "data.json"
     path.write_text(json.dumps(build_payload(use_cache=use_cache), ensure_ascii=False, indent=2))
     return path
 
@@ -825,7 +828,7 @@ def main() -> None:
 
 
 def _serve(payload: dict, args: argparse.Namespace) -> None:
-    os.chdir(ROOT)
+    os.chdir(WEB_DIR)
     port = args.port
     while True:
         try:
