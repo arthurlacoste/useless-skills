@@ -47,7 +47,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test "v$(tr -d '\n' < VERSION)" = "${GITHUB_REF_NAME}"
+          test "v$(tr -d '\n' < docs/VERSION)" = "${GITHUB_REF_NAME}"
 
       - name: Build release archive
         shell: bash
@@ -66,7 +66,7 @@ jobs:
             $0 == "## " version { found=1 }
             found && $0 ~ /^## / && $0 != "## " version { exit }
             found { print }
-          ' CHANGELOG.md > release-notes.md
+          ' docs/CHANGELOG.md > release-notes.md
           test -s release-notes.md
 
       - name: Create GitHub Release
